@@ -68,7 +68,8 @@ COPY --from=builder /app/next.config.ts ./next.config.ts
 
 # Non-root user for security hardening
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser  --system --uid 1001 nextjs
+    adduser  --system --uid 1001 nextjs && \
+    chown -R nextjs:nodejs /app
 USER nextjs
 
 # Document the default port (Heroku overrides this via $PORT env var)
