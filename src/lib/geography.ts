@@ -1,28 +1,41 @@
-// ── Province definitions ──────────────────────────────────────────────────────
+// ── Province definitions (all 34 provinces from GADM) ──────────────────────────
 
 export const PROVINCES = [
   { value: "all", label: "Semua Provinsi" },
-  { value: "aceh",    label: "Aceh",                  lonMin: 95.0,  lonMax: 98.3,  latMin: 2.0,  latMax: 5.9  },
-  { value: "sumut",   label: "Sumatera Utara",         lonMin: 98.0,  lonMax: 100.5, latMin: 1.0,  latMax: 4.5  },
-  { value: "sumbar",  label: "Sumatera Barat",         lonMin: 98.5,  lonMax: 101.8, latMin: -3.5, latMax: 1.5  },
-  { value: "riau",    label: "Riau",                   lonMin: 100.0, lonMax: 105.0, latMin: -1.0, latMax: 4.5  },
-  { value: "jambi",   label: "Jambi",                  lonMin: 101.5, lonMax: 105.0, latMin: -2.5, latMax: -0.5 },
-  { value: "sumsel",  label: "Sumatera Selatan",       lonMin: 103.0, lonMax: 106.5, latMin: -4.5, latMax: -1.5 },
-  { value: "lampung", label: "Lampung",                lonMin: 104.0, lonMax: 106.5, latMin: -6.0, latMax: -3.5 },
-  { value: "jakarta", label: "DKI Jakarta",            lonMin: 106.6, lonMax: 107.0, latMin: -6.4, latMax: -6.0 },
-  { value: "jabar",   label: "Jawa Barat",             lonMin: 106.3, lonMax: 108.8, latMin: -7.8, latMax: -6.2 },
-  { value: "jateng",  label: "Jawa Tengah",            lonMin: 108.5, lonMax: 111.2, latMin: -8.0, latMax: -6.5 },
-  { value: "jatim",   label: "Jawa Timur",             lonMin: 111.0, lonMax: 114.6, latMin: -8.5, latMax: -6.7 },
-  { value: "bali",    label: "Bali",                   lonMin: 114.4, lonMax: 115.7, latMin: -8.9, latMax: -8.0 },
-  { value: "kalbar",  label: "Kalimantan Barat",       lonMin: 108.5, lonMax: 110.5, latMin: -3.2, latMax: 2.1  },
-  { value: "kalteng", label: "Kalimantan Tengah",      lonMin: 110.5, lonMax: 116.0, latMin: -3.5, latMax: -0.5 },
-  { value: "kalsel",  label: "Kalimantan Selatan",     lonMin: 114.5, lonMax: 117.0, latMin: -4.2, latMax: -2.0 },
-  { value: "kaltim",  label: "Kalimantan Timur",       lonMin: 115.5, lonMax: 118.0, latMin: -1.5, latMax: 2.5  },
-  { value: "sulsel",  label: "Sulawesi Selatan",       lonMin: 119.0, lonMax: 121.5, latMin: -5.7, latMax: -2.0 },
-  { value: "sulut",   label: "Sulawesi Utara",         lonMin: 123.5, lonMax: 127.0, latMin: 0.3,  latMax: 1.8  },
-  { value: "papua",   label: "Papua",                  lonMin: 130.0, lonMax: 141.0, latMin: -9.0, latMax: -1.0 },
-  { value: "ntt",     label: "Nusa Tenggara Timur",    lonMin: 118.5, lonMax: 125.5, latMin: -11.0,latMax: -8.0 },
-  { value: "maluku",  label: "Maluku",                 lonMin: 125.0, lonMax: 135.0, latMin: -8.5, latMax: -2.5 },
+  { value: "aceh", label: "Aceh", lonMin: 95.0, lonMax: 98.3, latMin: 2.0, latMax: 6.1 },
+  { value: "bali", label: "Bali", lonMin: 114.4, lonMax: 115.7, latMin: -8.8, latMax: -8.1 },
+  { value: "bangka_belitung", label: "Bangka Belitung", lonMin: 105.1, lonMax: 108.8, latMin: -3.4, latMax: -1.5 },
+  { value: "banten", label: "Banten", lonMin: 105.1, lonMax: 106.8, latMin: -7.0, latMax: -5.8 },
+  { value: "bengkulu", label: "Bengkulu", lonMin: 101.0, lonMax: 103.8, latMin: -5.4, latMax: -2.3 },
+  { value: "di_yogyakarta", label: "DI Yogyakarta", lonMin: 110.0, lonMax: 110.8, latMin: -8.2, latMax: -7.5 },
+  { value: "dki_jakarta", label: "DKI Jakarta", lonMin: 106.4, lonMax: 107.0, latMin: -6.4, latMax: -5.2 },
+  { value: "gorontalo", label: "Gorontalo", lonMin: 121.2, lonMax: 123.6, latMin: 0.3, latMax: 1.0 },
+  { value: "jambi", label: "Jambi", lonMin: 101.1, lonMax: 104.5, latMin: -2.8, latMax: -0.7 },
+  { value: "jawa_barat", label: "Jawa Barat", lonMin: 106.4, lonMax: 108.8, latMin: -7.8, latMax: -5.9 },
+  { value: "jawa_tengah", label: "Jawa Tengah", lonMin: 108.6, lonMax: 111.7, latMin: -8.2, latMax: -5.7 },
+  { value: "jawa_timur", label: "Jawa Timur", lonMin: 110.9, lonMax: 116.3, latMin: -8.8, latMax: -5.0 },
+  { value: "kalimantan_barat", label: "Kalimantan Barat", lonMin: 108.7, lonMax: 114.2, latMin: -3.1, latMax: 2.1 },
+  { value: "kalimantan_selatan", label: "Kalimantan Selatan", lonMin: 114.3, lonMax: 116.5, latMin: -4.7, latMax: -1.3 },
+  { value: "kalimantan_tengah", label: "Kalimantan Tengah", lonMin: 110.7, lonMax: 115.8, latMin: -3.5, latMax: 0.8 },
+  { value: "kalimantan_timur", label: "Kalimantan Timur", lonMin: 113.8, lonMax: 119.0, latMin: -2.4, latMax: 2.6 },
+  { value: "kalimantan_utara", label: "Kalimantan Utara", lonMin: 114.6, lonMax: 118.0, latMin: 1.0, latMax: 4.4 },
+  { value: "kepulauan_riau", label: "Kepulauan Riau", lonMin: 103.3, lonMax: 109.2, latMin: -1.3, latMax: 4.8 },
+  { value: "lampung", label: "Lampung", lonMin: 103.6, lonMax: 106.2, latMin: -6.2, latMax: -3.7 },
+  { value: "maluku", label: "Maluku", lonMin: 125.7, lonMax: 134.9, latMin: -8.3, latMax: -1.4 },
+  { value: "maluku_utara", label: "Maluku Utara", lonMin: 124.3, lonMax: 129.7, latMin: -2.5, latMax: 2.6 },
+  { value: "nusa_tenggara_barat", label: "Nusa Tenggara Barat", lonMin: 115.8, lonMax: 119.3, latMin: -9.1, latMax: -8.1 },
+  { value: "nusa_tenggara_timur", label: "Nusa Tenggara Timur", lonMin: 118.9, lonMax: 125.2, latMin: -11.0, latMax: -8.1 },
+  { value: "papua", label: "Papua", lonMin: 134.3, lonMax: 141.0, latMin: -9.1, latMax: 0.9 },
+  { value: "papua_barat", label: "Papua Barat", lonMin: 129.3, lonMax: 135.3, latMin: -4.3, latMax: 0.6 },
+  { value: "riau", label: "Riau", lonMin: 100.0, lonMax: 103.8, latMin: -1.1, latMax: 2.9 },
+  { value: "sulawesi_barat", label: "Sulawesi Barat", lonMin: 117.1, lonMax: 119.9, latMin: -3.6, latMax: -0.8 },
+  { value: "sulawesi_selatan", label: "Sulawesi Selatan", lonMin: 117.0, lonMax: 121.8, latMin: -7.8, latMax: -1.9 },
+  { value: "sulawesi_tengah", label: "Sulawesi Tengah", lonMin: 119.4, lonMax: 124.2, latMin: -3.6, latMax: 1.4 },
+  { value: "sulawesi_tenggara", label: "Sulawesi Tenggara", lonMin: 120.9, lonMax: 124.6, latMin: -6.2, latMax: -2.8 },
+  { value: "sulawesi_utara", label: "Sulawesi Utara", lonMin: 123.1, lonMax: 127.2, latMin: 0.3, latMax: 5.6 },
+  { value: "sumatera_barat", label: "Sumatera Barat", lonMin: 98.6, lonMax: 101.9, latMin: -3.3, latMax: 0.9 },
+  { value: "sumatera_selatan", label: "Sumatera Selatan", lonMin: 102.1, lonMax: 106.2, latMin: -5.0, latMax: -1.6 },
+  { value: "sumatera_utara", label: "Sumatera Utara", lonMin: 97.1, lonMax: 100.4, latMin: -0.6, latMax: 4.3 },
 ] as const;
 
 export type ProvinceValue = (typeof PROVINCES)[number]["value"];
@@ -54,7 +67,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Nagan Raya",  lonMin: 96.0,  lonMax: 96.8,  latMin: 3.5,  latMax: 4.2  },
     { name: "Aceh Selatan",lonMin: 96.5,  lonMax: 97.5,  latMin: 2.5,  latMax: 3.8  },
   ],
-  sumut: [
+  sumatera_utara: [
     { name: "Deli Serdang",  lonMin: 98.4,  lonMax: 99.2,  latMin: 3.0,  latMax: 4.0  },
     { name: "Langkat",       lonMin: 97.9,  lonMax: 98.5,  latMin: 3.3,  latMax: 4.3  },
     { name: "Simalungun",    lonMin: 98.7,  lonMax: 99.3,  latMin: 2.5,  latMax: 3.5  },
@@ -64,7 +77,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Tapanuli Utara",lonMin: 98.8,  lonMax: 99.5,  latMin: 1.8,  latMax: 2.5  },
     { name: "Batu Bara",     lonMin: 99.2,  lonMax: 99.8,  latMin: 3.0,  latMax: 3.7  },
   ],
-  sumbar: [
+  sumatera_barat: [
     { name: "Padang Pariaman", lonMin: 99.6,  lonMax: 100.4, latMin: -0.7, latMax: 0.3  },
     { name: "Agam",            lonMin: 99.8,  lonMax: 100.5, latMin: -0.3, latMax: 0.5  },
     { name: "Lima Puluh Kota", lonMin: 100.3, lonMax: 101.0, latMin: -0.3, latMax: 0.4  },
@@ -93,7 +106,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Sarolangun",   lonMin: 102.5, lonMax: 103.5, latMin: -2.5, latMax: -1.5 },
     { name: "Bungo",        lonMin: 101.5, lonMax: 102.3, latMin: -1.8, latMax: -0.8 },
   ],
-  sumsel: [
+  sumatera_selatan: [
     { name: "Musi Banyuasin", lonMin: 103.5, lonMax: 104.5, latMin: -2.5, latMax: -1.5 },
     { name: "Banyuasin",      lonMin: 104.2, lonMax: 105.3, latMin: -3.0, latMax: -1.8 },
     { name: "Musi Rawas",     lonMin: 102.5, lonMax: 104.0, latMin: -3.5, latMax: -2.5 },
@@ -112,14 +125,14 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Pringsewu",       lonMin: 104.8, lonMax: 105.1, latMin: -5.4, latMax: -5.0 },
     { name: "Pesawaran",       lonMin: 105.0, lonMax: 105.4, latMin: -5.6, latMax: -5.2 },
   ],
-  jakarta: [
+  dki_jakarta: [
     { name: "Jakarta Utara",  lonMin: 106.74, lonMax: 107.0,  latMin: -6.15, latMax: -6.05 },
     { name: "Jakarta Barat",  lonMin: 106.68, lonMax: 106.78, latMin: -6.22, latMax: -6.13 },
     { name: "Jakarta Pusat",  lonMin: 106.78, lonMax: 106.88, latMin: -6.22, latMax: -6.12 },
     { name: "Jakarta Selatan",lonMin: 106.76, lonMax: 106.88, latMin: -6.32, latMax: -6.22 },
     { name: "Jakarta Timur",  lonMin: 106.85, lonMax: 107.0,  latMin: -6.33, latMax: -6.10 },
   ],
-  jabar: [
+  jawa_barat: [
     { name: "Bandung",    lonMin: 107.45, lonMax: 108.2, latMin: -7.2,  latMax: -6.8  },
     { name: "Bogor",      lonMin: 106.6,  lonMax: 107.1, latMin: -6.8,  latMax: -6.4  },
     { name: "Karawang",   lonMin: 107.2,  lonMax: 107.6, latMin: -6.5,  latMax: -6.1  },
@@ -131,7 +144,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Tasikmalaya",lonMin: 108.0,  lonMax: 108.5, latMin: -7.5,  latMax: -7.1  },
     { name: "Sukabumi",   lonMin: 106.6,  lonMax: 107.1, latMin: -7.2,  latMax: -6.8  },
   ],
-  jateng: [
+  jawa_tengah: [
     { name: "Semarang",   lonMin: 110.2, lonMax: 110.7, latMin: -7.2, latMax: -6.9 },
     { name: "Demak",      lonMin: 110.5, lonMax: 110.9, latMin: -7.0, latMax: -6.8 },
     { name: "Kendal",     lonMin: 110.0, lonMax: 110.3, latMin: -7.1, latMax: -6.9 },
@@ -143,7 +156,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Kebumen",    lonMin: 109.5, lonMax: 109.9, latMin: -7.8, latMax: -7.5 },
     { name: "Kudus",      lonMin: 110.7, lonMax: 111.0, latMin: -6.9, latMax: -6.7 },
   ],
-  jatim: [
+  jawa_timur: [
     { name: "Surabaya",   lonMin: 112.6, lonMax: 112.8, latMin: -7.4, latMax: -7.2 },
     { name: "Sidoarjo",   lonMin: 112.6, lonMax: 112.9, latMin: -7.6, latMax: -7.3 },
     { name: "Lamongan",   lonMin: 112.2, lonMax: 112.5, latMin: -7.1, latMax: -6.8 },
@@ -165,7 +178,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Klungkung",  lonMin: 115.3, lonMax: 115.6, latMin: -8.8, latMax: -8.5 },
     { name: "Karangasem", lonMin: 115.5, lonMax: 115.8, latMin: -8.8, latMax: -8.3 },
   ],
-  kalbar: [
+  kalimantan_barat: [
     { name: "Kubu Raya",   lonMin: 109.0, lonMax: 109.7, latMin: -0.5, latMax: 0.1  },
     { name: "Sanggau",     lonMin: 109.5, lonMax: 110.4, latMin: 0.0,  latMax: 1.0  },
     { name: "Landak",      lonMin: 109.3, lonMax: 109.8, latMin: 0.0,  latMax: 0.8  },
@@ -175,7 +188,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Sekadau",     lonMin: 110.5, lonMax: 111.0, latMin: -0.5, latMax: 0.5  },
     { name: "Melawi",      lonMin: 111.0, lonMax: 112.0, latMin: -0.5, latMax: 0.5  },
   ],
-  kalteng: [
+  kalimantan_tengah: [
     { name: "Kotawaringin Barat",  lonMin: 111.0, lonMax: 112.0, latMin: -3.0, latMax: -1.5 },
     { name: "Kotawaringin Timur",  lonMin: 112.0, lonMax: 113.5, latMin: -3.5, latMax: -1.8 },
     { name: "Kapuas",              lonMin: 113.5, lonMax: 115.5, latMin: -3.5, latMax: -2.0 },
@@ -185,7 +198,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Gunung Mas",          lonMin: 113.2, lonMax: 114.0, latMin: -1.5, latMax: -0.5 },
     { name: "Barito Selatan",      lonMin: 114.5, lonMax: 115.5, latMin: -2.5, latMax: -1.5 },
   ],
-  kalsel: [
+  kalimantan_selatan: [
     { name: "Banjar",       lonMin: 114.7, lonMax: 115.4, latMin: -3.7, latMax: -3.0 },
     { name: "Barito Kuala", lonMin: 114.5, lonMax: 115.0, latMin: -3.5, latMax: -2.8 },
     { name: "Tapin",        lonMin: 115.0, lonMax: 115.5, latMin: -3.5, latMax: -3.0 },
@@ -195,7 +208,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Kotabaru",     lonMin: 115.5, lonMax: 117.0, latMin: -4.2, latMax: -3.5 },
     { name: "Tanah Laut",   lonMin: 114.7, lonMax: 115.3, latMin: -4.0, latMax: -3.5 },
   ],
-  kaltim: [
+  kalimantan_timur: [
     { name: "Kutai Kartanegara", lonMin: 115.5, lonMax: 117.0, latMin: -0.5, latMax: 1.0  },
     { name: "Berau",             lonMin: 116.5, lonMax: 118.0, latMin: 1.5,  latMax: 2.5  },
     { name: "Kutai Barat",       lonMin: 115.0, lonMax: 116.0, latMin: -0.5, latMax: 1.0  },
@@ -204,7 +217,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Paser",             lonMin: 115.5, lonMax: 116.5, latMin: -2.0, latMax: -1.0 },
     { name: "Mahakam Ulu",       lonMin: 114.0, lonMax: 116.0, latMin: -0.5, latMax: 1.5  },
   ],
-  sulsel: [
+  sulawesi_selatan: [
     { name: "Gowa",    lonMin: 119.5, lonMax: 120.0, latMin: -5.5, latMax: -5.0 },
     { name: "Maros",   lonMin: 119.5, lonMax: 119.9, latMin: -5.0, latMax: -4.7 },
     { name: "Pangkep", lonMin: 119.4, lonMax: 119.7, latMin: -4.8, latMax: -4.5 },
@@ -214,7 +227,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Pinrang", lonMin: 119.0, lonMax: 119.6, latMin: -3.8, latMax: -3.2 },
     { name: "Sinjai",  lonMin: 120.2, lonMax: 120.6, latMin: -5.4, latMax: -5.1 },
   ],
-  sulut: [
+  sulawesi_utara: [
     { name: "Minahasa",           lonMin: 124.5, lonMax: 125.2, latMin: 1.1, latMax: 1.7 },
     { name: "Minahasa Utara",     lonMin: 125.0, lonMax: 125.6, latMin: 1.5, latMax: 1.8 },
     { name: "Minahasa Selatan",   lonMin: 124.0, lonMax: 124.5, latMin: 0.9, latMax: 1.4 },
@@ -232,7 +245,7 @@ export const KABUPATEN_MAP: Record<string, KabupatenEntry[]> = {
     { name: "Nabire",     lonMin: 135.0, lonMax: 136.0, latMin: -4.5, latMax: -3.4 },
     { name: "Sarmi",      lonMin: 138.0, lonMax: 139.5, latMin: -2.5, latMax: -1.5 },
   ],
-  ntt: [
+  nusa_tenggara_timur: [
     { name: "Flores Timur",   lonMin: 122.4, lonMax: 123.0, latMin: -8.7, latMax: -8.2 },
     { name: "Sikka",          lonMin: 121.9, lonMax: 122.4, latMin: -8.7, latMax: -8.2 },
     { name: "Lembata",        lonMin: 123.0, lonMax: 123.8, latMin: -8.8, latMax: -8.3 },
@@ -270,29 +283,42 @@ export function buildKabupatenCaseSQL(provinceValue: string): string {
   return `CASE\n            ${cases}\n            ELSE 'Lainnya'\n          END`;
 }
 
-// ── Province CASE/WHEN SQL expression ────────────────────────────────────────
+// ── Province CASE/WHEN SQL expression (all 34 provinces) ────────────────────────
 
 export const PROVINCE_CASE_SQL = `CASE
-    WHEN centroid_lon >= 95.0 AND centroid_lon <= 98.3 AND centroid_lat >= 2.0 AND centroid_lat <= 5.9 THEN 'Aceh'
-    WHEN centroid_lon >= 98.0 AND centroid_lon <= 100.5 AND centroid_lat >= 1.0 AND centroid_lat <= 4.5 THEN 'Sumatera Utara'
-    WHEN centroid_lon >= 98.5 AND centroid_lon <= 101.8 AND centroid_lat >= -3.5 AND centroid_lat <= 1.5 THEN 'Sumatera Barat'
-    WHEN centroid_lon >= 100.0 AND centroid_lon <= 105.0 AND centroid_lat >= -1.0 AND centroid_lat <= 4.5 THEN 'Riau'
-    WHEN centroid_lon >= 101.5 AND centroid_lon <= 105.0 AND centroid_lat >= -2.5 AND centroid_lat <= -0.5 THEN 'Jambi'
-    WHEN centroid_lon >= 103.0 AND centroid_lon <= 106.5 AND centroid_lat >= -4.5 AND centroid_lat <= -1.5 THEN 'Sumatera Selatan'
-    WHEN centroid_lon >= 104.0 AND centroid_lon <= 106.5 AND centroid_lat >= -6.0 AND centroid_lat <= -3.5 THEN 'Lampung'
-    WHEN centroid_lon >= 106.6 AND centroid_lon <= 107.0 AND centroid_lat >= -6.4 AND centroid_lat <= -6.0 THEN 'DKI Jakarta'
-    WHEN centroid_lon >= 106.3 AND centroid_lon <= 108.8 AND centroid_lat >= -7.8 AND centroid_lat <= -6.2 THEN 'Jawa Barat'
-    WHEN centroid_lon >= 108.5 AND centroid_lon <= 111.2 AND centroid_lat >= -8.0 AND centroid_lat <= -6.5 THEN 'Jawa Tengah'
-    WHEN centroid_lon >= 111.0 AND centroid_lon <= 114.6 AND centroid_lat >= -8.5 AND centroid_lat <= -6.7 THEN 'Jawa Timur'
-    WHEN centroid_lon >= 114.4 AND centroid_lon <= 115.7 AND centroid_lat >= -8.9 AND centroid_lat <= -8.0 THEN 'Bali'
-    WHEN centroid_lon >= 108.5 AND centroid_lon <= 110.5 AND centroid_lat >= -3.2 AND centroid_lat <= 2.1 THEN 'Kalimantan Barat'
-    WHEN centroid_lon >= 110.5 AND centroid_lon <= 116.0 AND centroid_lat >= -3.5 AND centroid_lat <= -0.5 THEN 'Kalimantan Tengah'
-    WHEN centroid_lon >= 114.5 AND centroid_lon <= 117.0 AND centroid_lat >= -4.2 AND centroid_lat <= -2.0 THEN 'Kalimantan Selatan'
-    WHEN centroid_lon >= 115.5 AND centroid_lon <= 118.0 AND centroid_lat >= -1.5 AND centroid_lat <= 2.5 THEN 'Kalimantan Timur'
-    WHEN centroid_lon >= 119.0 AND centroid_lon <= 121.5 AND centroid_lat >= -5.7 AND centroid_lat <= -2.0 THEN 'Sulawesi Selatan'
-    WHEN centroid_lon >= 123.5 AND centroid_lon <= 127.0 AND centroid_lat >= 0.3 AND centroid_lat <= 1.8 THEN 'Sulawesi Utara'
-    WHEN centroid_lon >= 130.0 AND centroid_lon <= 141.0 AND centroid_lat >= -9.0 AND centroid_lat <= -1.0 THEN 'Papua'
-    WHEN centroid_lon >= 118.5 AND centroid_lon <= 125.5 AND centroid_lat >= -11.0 AND centroid_lat <= -8.0 THEN 'Nusa Tenggara Timur'
-    WHEN centroid_lon >= 125.0 AND centroid_lon <= 135.0 AND centroid_lat >= -8.5 AND centroid_lat <= -2.5 THEN 'Maluku'
+    WHEN centroid_lon >= 95.0 AND centroid_lon <= 98.3 AND centroid_lat >= 2.0 AND centroid_lat <= 6.1 THEN 'Aceh'
+    WHEN centroid_lon >= 114.4 AND centroid_lon <= 115.7 AND centroid_lat >= -8.8 AND centroid_lat <= -8.1 THEN 'Bali'
+    WHEN centroid_lon >= 105.1 AND centroid_lon <= 108.8 AND centroid_lat >= -3.4 AND centroid_lat <= -1.5 THEN 'Bangka Belitung'
+    WHEN centroid_lon >= 105.1 AND centroid_lon <= 106.8 AND centroid_lat >= -7.0 AND centroid_lat <= -5.8 THEN 'Banten'
+    WHEN centroid_lon >= 101.0 AND centroid_lon <= 103.8 AND centroid_lat >= -5.4 AND centroid_lat <= -2.3 THEN 'Bengkulu'
+    WHEN centroid_lon >= 110.0 AND centroid_lon <= 110.8 AND centroid_lat >= -8.2 AND centroid_lat <= -7.5 THEN 'DI Yogyakarta'
+    WHEN centroid_lon >= 106.4 AND centroid_lon <= 107.0 AND centroid_lat >= -6.4 AND centroid_lat <= -5.2 THEN 'DKI Jakarta'
+    WHEN centroid_lon >= 121.2 AND centroid_lon <= 123.6 AND centroid_lat >= 0.3 AND centroid_lat <= 1.0 THEN 'Gorontalo'
+    WHEN centroid_lon >= 101.1 AND centroid_lon <= 104.5 AND centroid_lat >= -2.8 AND centroid_lat <= -0.7 THEN 'Jambi'
+    WHEN centroid_lon >= 106.4 AND centroid_lon <= 108.8 AND centroid_lat >= -7.8 AND centroid_lat <= -5.9 THEN 'Jawa Barat'
+    WHEN centroid_lon >= 108.6 AND centroid_lon <= 111.7 AND centroid_lat >= -8.2 AND centroid_lat <= -5.7 THEN 'Jawa Tengah'
+    WHEN centroid_lon >= 110.9 AND centroid_lon <= 116.3 AND centroid_lat >= -8.8 AND centroid_lat <= -5.0 THEN 'Jawa Timur'
+    WHEN centroid_lon >= 108.7 AND centroid_lon <= 114.2 AND centroid_lat >= -3.1 AND centroid_lat <= 2.1 THEN 'Kalimantan Barat'
+    WHEN centroid_lon >= 114.3 AND centroid_lon <= 116.5 AND centroid_lat >= -4.7 AND centroid_lat <= -1.3 THEN 'Kalimantan Selatan'
+    WHEN centroid_lon >= 110.7 AND centroid_lon <= 115.8 AND centroid_lat >= -3.5 AND centroid_lat <= 0.8 THEN 'Kalimantan Tengah'
+    WHEN centroid_lon >= 113.8 AND centroid_lon <= 119.0 AND centroid_lat >= -2.4 AND centroid_lat <= 2.6 THEN 'Kalimantan Timur'
+    WHEN centroid_lon >= 114.6 AND centroid_lon <= 118.0 AND centroid_lat >= 1.0 AND centroid_lat <= 4.4 THEN 'Kalimantan Utara'
+    WHEN centroid_lon >= 103.3 AND centroid_lon <= 109.2 AND centroid_lat >= -1.3 AND centroid_lat <= 4.8 THEN 'Kepulauan Riau'
+    WHEN centroid_lon >= 103.6 AND centroid_lon <= 106.2 AND centroid_lat >= -6.2 AND centroid_lat <= -3.7 THEN 'Lampung'
+    WHEN centroid_lon >= 125.7 AND centroid_lon <= 134.9 AND centroid_lat >= -8.3 AND centroid_lat <= -1.4 THEN 'Maluku'
+    WHEN centroid_lon >= 124.3 AND centroid_lon <= 129.7 AND centroid_lat >= -2.5 AND centroid_lat <= 2.6 THEN 'Maluku Utara'
+    WHEN centroid_lon >= 115.8 AND centroid_lon <= 119.3 AND centroid_lat >= -9.1 AND centroid_lat <= -8.1 THEN 'Nusa Tenggara Barat'
+    WHEN centroid_lon >= 118.9 AND centroid_lon <= 125.2 AND centroid_lat >= -11.0 AND centroid_lat <= -8.1 THEN 'Nusa Tenggara Timur'
+    WHEN centroid_lon >= 134.3 AND centroid_lon <= 141.0 AND centroid_lat >= -9.1 AND centroid_lat <= 0.9 THEN 'Papua'
+    WHEN centroid_lon >= 129.3 AND centroid_lon <= 135.3 AND centroid_lat >= -4.3 AND centroid_lat <= 0.6 THEN 'Papua Barat'
+    WHEN centroid_lon >= 100.0 AND centroid_lon <= 103.8 AND centroid_lat >= -1.1 AND centroid_lat <= 2.9 THEN 'Riau'
+    WHEN centroid_lon >= 117.1 AND centroid_lon <= 119.9 AND centroid_lat >= -3.6 AND centroid_lat <= -0.8 THEN 'Sulawesi Barat'
+    WHEN centroid_lon >= 117.0 AND centroid_lon <= 121.8 AND centroid_lat >= -7.8 AND centroid_lat <= -1.9 THEN 'Sulawesi Selatan'
+    WHEN centroid_lon >= 119.4 AND centroid_lon <= 124.2 AND centroid_lat >= -3.6 AND centroid_lat <= 1.4 THEN 'Sulawesi Tengah'
+    WHEN centroid_lon >= 120.9 AND centroid_lon <= 124.6 AND centroid_lat >= -6.2 AND centroid_lat <= -2.8 THEN 'Sulawesi Tenggara'
+    WHEN centroid_lon >= 123.1 AND centroid_lon <= 127.2 AND centroid_lat >= 0.3 AND centroid_lat <= 5.6 THEN 'Sulawesi Utara'
+    WHEN centroid_lon >= 98.6 AND centroid_lon <= 101.9 AND centroid_lat >= -3.3 AND centroid_lat <= 0.9 THEN 'Sumatera Barat'
+    WHEN centroid_lon >= 102.1 AND centroid_lon <= 106.2 AND centroid_lat >= -5.0 AND centroid_lat <= -1.6 THEN 'Sumatera Selatan'
+    WHEN centroid_lon >= 97.1 AND centroid_lon <= 100.4 AND centroid_lat >= -0.6 AND centroid_lat <= 4.3 THEN 'Sumatera Utara'
     ELSE 'Lainnya'
   END`;

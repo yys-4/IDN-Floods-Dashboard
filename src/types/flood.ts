@@ -32,7 +32,7 @@ export interface FloodPoint {
   centroid_lat: number;
 }
 
-export type LayerMode = "heatmap" | "hexagon";
+export type LayerMode = "heatmap" | "hexagon" | "choropleth";
 
 /** Geographic aggregation level */
 export type GeoLevel = "provinsi" | "kabupaten" | "kecamatan";
@@ -62,10 +62,11 @@ export interface ViewportBounds {
   maxLat: number;
 }
 
-/** Province flood count for bar chart */
+/** Province flood count for bar chart and choropleth */
 export interface ProvinceCount {
   province: string;
   count: number;
+  area?: number;
 }
 
 /** Yearly flood count for trend line chart */
