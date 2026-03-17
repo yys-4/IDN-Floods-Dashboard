@@ -1,0 +1,32 @@
+# ── Build artifacts ────────────────────────────────────────────────────────────
+node_modules
+.next
+out
+
+# ── Version control ────────────────────────────────────────────────────────────
+.git
+.gitignore
+
+# ── CI / deployment (not needed inside the image) ─────────────────────────────
+.github
+scripts
+heroku.yml
+Dockerfile
+.dockerignore
+
+# ── Local env files (never bake secrets into the image) ───────────────────────
+.env
+.env.*
+!.env.example
+
+# ── OS & editor noise ─────────────────────────────────────────────────────────
+.DS_Store
+*.log
+*.md
+.vscode
+.idea
+
+# ── Test & lint ───────────────────────────────────────────────────────────────
+coverage
+*.test.*
+*.spec.*

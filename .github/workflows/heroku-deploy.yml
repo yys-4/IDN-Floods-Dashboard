@@ -1,0 +1,101 @@
+# =============================================================================
+# .github/workflows/heroku-deploy.yml
+# CI/CD: Build Docker image → Push to Heroku Container Registry → Release
+#
+# Required GitHub Secrets (Settings → Secrets and variables → Actions):
+#   HEROKU_API_KEY   — from `heroku auth:token` or Account Settings
+#   HEROKU_APP_NAME  — your Heroku app name, e.g. "banjir-indonesia"
+#
+# Trigger: every push to `main` branch
+# =============================================================================
+
+name: Deploy to Heroku (Container Stack)
+
+on:
+  push:
+    branches:
+      - main
+  # Allow manual re-deploys from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30       # large image (73 MB parquet) — give it time
+
+    steps:
+      # ── 1. Checkout source ────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Authenticate with Heroku Container Registry ────────────────────
+      # The registry expects username "_" and the API key as the password.
+      - name: Log in to Heroku Container Registry
+        run: |
+          echo "${{ secrets.HEROKU_API_KEY }}" \
+            | docker login registry.heroku.com \
+                --username=_ \
+                --password-stdin
+
+      # ── 3. Build the Docker image ─────────────────────────────────────────
+      # The build context is the repo root (which IS the web/ app directory
+      # because the Git repo is rooted at banjir-indonesia/web/).
+      - name: Build Docker image
+        run: |
+          docker build \
+            --tag registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web \
+            --file Dockerfile \
+            .
+
+      # ── 4. Push image to Heroku ───────────────────────────────────────────
+      - name: Push image to Heroku Container Registry
+        run: |
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+
+      # ── 5. Release the container (make it live) ───────────────────────────
+      # Calls the Heroku API directly — no CLI installation needed.
+      # This swaps the running dyno to the newly pushed image.
+      - name: Release container on Heroku
+        run: |
+          # Grab the content-addressable digest of the image we just pushed
+          IMAGE_ID=$(docker inspect \
+            registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web \
+            --format='{{index .RepoDigests 0}}')
+
+          curl -fsS -X PATCH \
+            "https://api.heroku.com/apps/${{ secrets.HEROKU_APP_NAME }}/formation" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+            -H "Authorization: Bearer ${{ secrets.HEROKU_API_KEY }}" \
+            -d "{\"updates\":[{\"type\":\"web\",\"docker_image\":\"${IMAGE_ID}\"}]}"
+
+      # ── 6. Smoke-test the live deployment ─────────────────────────────────
+      # Wait a few seconds for the dyno to restart, then hit the homepage
+      # and verify the parquet file is reachable.
+      - name: Post-deployment smoke test
+        run: |
+          APP_URL="https://${{ secrets.HEROKU_APP_NAME }}.herokuapp.com"
+
+          echo "⏳ Waiting 15 s for dyno restart…"
+          sleep 15
+
+          # Check homepage
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$APP_URL")
+          if [ "$HTTP" -ne 200 ]; then
+            echo "❌ Homepage returned HTTP $HTTP (expected 200)"
+            exit 1
+          fi
+          echo "✅ Homepage OK (HTTP $HTTP)"
+
+          # Check the parquet data file is served
+          PARQUET_HTTP=$(curl -s -o /dev/null -w "%{http_code}" \
+            --max-time 30 -r 0-1023 \
+            "$APP_URL/indonesia_floods.parquet")
+          if [ "$PARQUET_HTTP" -ne 200 ] && [ "$PARQUET_HTTP" -ne 206 ]; then
+            echo "❌ Parquet file not accessible (HTTP $PARQUET_HTTP)"
+            exit 1
+          fi
+          echo "✅ Parquet file accessible (HTTP $PARQUET_HTTP)"
+          echo ""
+          echo "🌊 Banjir Indonesia Dashboard is live at $APP_URL"

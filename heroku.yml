@@ -1,0 +1,21 @@
+# =============================================================================
+# heroku.yml — Heroku Container Stack configuration
+# Docs: https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
+#
+# What this file does:
+#   • Tells Heroku to build the `web` dyno from ./Dockerfile
+#   • The Container Stack (heroku stack:set container) must be active
+#     on the app before the first deploy.
+#
+# First-time setup (run once from your terminal):
+#   heroku login
+#   heroku create <your-app-name>          # or pick an existing app
+#   heroku stack:set container -a <your-app-name>
+#   git push heroku main                   # or let GitHub Actions handle it
+# =============================================================================
+
+build:
+  docker:
+    # `web` is the standard Heroku process type for the HTTP-serving dyno.
+    # Heroku injects $PORT at runtime; the Dockerfile CMD honours it.
+    web: Dockerfile
