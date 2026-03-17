@@ -58,16 +58,16 @@ export function TimelineSlider({
       initial={{ y: 80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", damping: 20, stiffness: 200, delay: 0.3 }}
-      className="absolute bottom-4 left-0 right-0 z-30"
+      className="absolute bottom-3 left-0 right-0 z-30"
     >
-      <div className="mx-auto max-w-5xl px-6 pb-5">
-        <div className="rounded-xl border border-white/10 bg-gray-900/90 px-6 py-4 shadow-2xl backdrop-blur-md">
-          <div className="flex items-center gap-4">
+      <div className="mx-auto max-w-4xl px-4 pb-2">
+        <div className="rounded-xl border border-[#16425B]/12 bg-white/92 px-4 py-2.5 shadow-xl backdrop-blur-md">
+          <div className="flex items-center gap-3">
             {/* Controls */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1">
               <button
                 onClick={onPlayPause}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-white transition-all hover:bg-blue-500 hover:scale-105 active:scale-95"
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-[#2F6690] text-white transition-all hover:bg-[#3A7CA5] hover:scale-105 active:scale-95"
               >
                 <AnimatePresence mode="wait">
                   {playing ? (
@@ -77,7 +77,7 @@ export function TimelineSlider({
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
                     >
-                      <Pause className="h-4 w-4" />
+                      <Pause className="h-3.5 w-3.5" />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -86,38 +86,38 @@ export function TimelineSlider({
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
                     >
-                      <Play className="h-4 w-4 ml-0.5" />
+                      <Play className="h-3.5 w-3.5 ml-0.5" />
                     </motion.div>
                   )}
                 </AnimatePresence>
               </button>
               <button
                 onClick={onReset}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+                className="flex h-6 w-6 items-center justify-center rounded-full text-[#6b8a9e] transition-colors hover:bg-[#81C3D7]/15 hover:text-[#16425B]"
               >
-                <RotateCcw className="h-3.5 w-3.5" />
+                <RotateCcw className="h-3 w-3" />
               </button>
             </div>
 
             {/* Year badge */}
             <motion.div
               key={year}
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="flex min-w-[90px] flex-col items-center"
+              className="flex items-baseline gap-1.5 min-w-[64px]"
             >
-              <span className="text-2xl font-bold tabular-nums text-white">
+              <span className="text-lg font-bold tabular-nums text-[#16425B] leading-none">
                 {year}
               </span>
               {eventCount !== undefined && (
-                <span className="text-[10px] text-gray-500">
-                  {eventCount.toLocaleString()} events
+                <span className="text-[9px] text-[#9cb3c2] tabular-nums">
+                  {eventCount.toLocaleString()}ev
                 </span>
               )}
             </motion.div>
 
             {/* Slider */}
-            <div className="flex-1 flex flex-col gap-1">
+            <div className="flex-1 flex flex-col gap-0.5">
               <Slider
                 value={[year]}
                 min={minYear}
@@ -131,11 +131,11 @@ export function TimelineSlider({
                 {years.map((y) => (
                   <span
                     key={y}
-                    className={`text-[9px] tabular-nums transition-colors ${
+                    className={`text-[8px] tabular-nums transition-colors leading-none ${
                       y === year
-                        ? "text-blue-400 font-medium"
+                        ? "text-[#2F6690] font-medium"
                         : y % 5 === 0
-                        ? "text-gray-500"
+                        ? "text-[#9cb3c2]"
                         : "text-transparent"
                     }`}
                   >

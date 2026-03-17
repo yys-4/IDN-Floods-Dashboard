@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   Search,
   Droplets,
@@ -179,45 +178,43 @@ export function Sidebar({
   })();
 
   return (
-    <motion.aside
-      initial={{ x: -300, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ type: "spring", damping: 24, stiffness: 200 }}
-      className="flex-none w-[300px] border-r border-white/[0.07] bg-gray-950/80 backdrop-blur-md overflow-y-auto z-20 flex flex-col"
+    <aside
+      className="flex-none w-[300px] min-w-[300px] max-w-[300px] border-r border-[#16425B]/10 bg-white/95 backdrop-blur-md overflow-y-auto overflow-x-hidden z-20 flex flex-col"
+      style={{ contain: "layout size", willChange: "auto" }}
     >
       {/* ── Header ──────────────────────────────────────────────────────── */}
-      <div className="relative px-5 pt-5 pb-4 border-b border-white/[0.07]">
+      <div className="relative px-5 pt-5 pb-4 border-b border-[#16425B]/8">
         {/* subtle top glow */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#3A7CA5]/30 to-transparent" />
 
         <div className="flex items-center gap-3 mb-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg shadow-blue-500/30">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2F6690] to-[#81C3D7] shadow-lg shadow-[#2F6690]/25">
             <Droplets className="w-4 h-4 text-white" />
           </div>
           <div>
-            <h1 className="text-sm font-bold tracking-tight text-white leading-none">
+            <h1 className="text-sm font-bold tracking-tight text-[#16425B] leading-none">
               Peta Banjir Indonesia
             </h1>
-            <p className="text-[10px] text-blue-400/70 mt-0.5 font-medium">
+            <p className="text-[10px] text-[#3A7CA5] mt-0.5 font-medium">
               2000 – 2026
             </p>
           </div>
         </div>
 
         {/* Description */}
-        <p className="text-[11px] text-gray-400 leading-relaxed mb-3">
+        <p className="text-[11px] text-[#6b8a9e] leading-relaxed mb-3">
           Visualisasi banjir berbasis data satelit{" "}
-          <span className="text-blue-400 font-medium">Groundsource</span>{" "}
+          <span className="text-[#2F6690] font-medium">Groundsource</span>{" "}
           — deteksi permukaan genangan air dari citra radar spasial resolusi
           tinggi.
         </p>
 
         {/* Contact */}
-        <div className="flex items-center gap-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] px-2.5 py-1.5">
-          <Mail className="w-3 h-3 text-gray-500 shrink-0" />
+        <div className="flex items-center gap-1.5 rounded-lg bg-[#16425B]/[0.04] border border-[#16425B]/[0.08] px-2.5 py-1.5">
+          <Mail className="w-3 h-3 text-[#9cb3c2] shrink-0" />
           <a
             href="mailto:muhammadayyas1003@gmail.com"
-            className="text-[10px] text-gray-400 hover:text-blue-400 transition-colors truncate"
+            className="text-[10px] text-[#6b8a9e] hover:text-[#2F6690] transition-colors truncate"
           >
             Muhammad Ayyas · muhammadayyas1003@gmail.com
           </a>
@@ -227,27 +224,27 @@ export function Sidebar({
       <div className="px-4 py-4 space-y-5 flex-1">
         {/* ── Search ──────────────────────────────────────────────────────── */}
         <div className="relative" ref={searchRef}>
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500 pointer-events-none z-10" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#9cb3c2] pointer-events-none z-10" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             placeholder="Cari lokasi..."
-            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] pl-8 pr-3 py-2 text-[12px] text-white placeholder-gray-600 outline-none transition-all focus:border-blue-500/40 focus:bg-white/[0.06] focus:shadow-[0_0_0_3px_rgba(59,130,246,0.08)]"
+            className="w-full rounded-lg border border-[#16425B]/10 bg-[#16425B]/[0.03] pl-8 pr-3 py-2 text-[12px] text-[#16425B] placeholder-[#9cb3c2] outline-none transition-all focus:border-[#3A7CA5]/40 focus:bg-[#16425B]/[0.05] focus:shadow-[0_0_0_3px_rgba(58,124,165,0.08)]"
           />
           {/* Search results dropdown */}
           {searchFocused && searchResults.length > 0 && (
-            <div className="absolute left-0 right-0 top-full mt-1 z-50 rounded-lg border border-white/[0.1] bg-gray-900/95 backdrop-blur-md shadow-2xl overflow-hidden">
+            <div className="absolute left-0 right-0 top-full mt-1 z-50 rounded-lg border border-[#16425B]/10 bg-white/98 backdrop-blur-md shadow-2xl overflow-hidden">
               {searchResults.map((r, i) => (
                 <button
                   key={`${r.provinceValue}-${r.label}-${i}`}
                   onClick={() => handleSearchSelect(r.provinceValue)}
-                  className="w-full flex items-center gap-2 px-3 py-2 text-left text-[11px] text-gray-300 hover:bg-white/[0.08] hover:text-white transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 text-left text-[11px] text-[#2F6690] hover:bg-[#81C3D7]/10 hover:text-[#16425B] transition-colors"
                 >
-                  <MapPin className="w-3 h-3 shrink-0 text-blue-400" />
+                  <MapPin className="w-3 h-3 shrink-0 text-[#3A7CA5]" />
                   <span className="truncate">{r.label}</span>
-                  <span className="ml-auto text-[9px] text-gray-600 uppercase shrink-0">
+                  <span className="ml-auto text-[9px] text-[#9cb3c2] uppercase shrink-0">
                     {r.type}
                   </span>
                 </button>
@@ -274,7 +271,7 @@ export function Sidebar({
                     : stats.total_records.toLocaleString("id-ID")
                   : "—"
               }
-              accent="blue"
+              accent="navy"
             />
             <KPICard
               icon={<BarChart2 className="w-3 h-3" />}
@@ -286,7 +283,7 @@ export function Sidebar({
                   ? unitCount.toLocaleString("id-ID")
                   : "—"
               }
-              accent="cyan"
+              accent="deep"
             />
             <KPICard
               icon={<Map className="w-3 h-3" />}
@@ -296,13 +293,13 @@ export function Sidebar({
                   ? null
                   : visibleCount.toLocaleString("id-ID")
               }
-              accent="teal"
+              accent="medium"
             />
             <KPICard
               icon={<Clock className="w-3 h-3" />}
               label="JENDELA WAKTU"
               value={dataLoading ? null : timeWindow}
-              accent="indigo"
+              accent="sky"
             />
           </div>
         </SidebarSection>
@@ -392,11 +389,11 @@ export function Sidebar({
             {/* Year Range */}
             <LabeledControl label="Rentang Tahun">
               <div className="flex items-center justify-between text-[11px] mb-2">
-                <span className="tabular-nums font-semibold text-blue-400">
+                <span className="tabular-nums font-semibold text-[#2F6690]">
                   {yearRange[0]}
                 </span>
-                <span className="text-gray-600">–</span>
-                <span className="tabular-nums font-semibold text-blue-400">
+                <span className="text-[#9cb3c2]">–</span>
+                <span className="tabular-nums font-semibold text-[#2F6690]">
                   {yearRange[1]}
                 </span>
               </div>
@@ -408,7 +405,7 @@ export function Sidebar({
                 onValueChange={onYearRangeChange}
               />
               {timelineActive && (
-                <p className="mt-1.5 flex items-center gap-1 text-[10px] text-yellow-500/70">
+                <p className="mt-1.5 flex items-center gap-1 text-[10px] text-[#3A7CA5]/70">
                   <Calendar className="w-3 h-3" />
                   Timeline aktif — menampilkan {timelineYear} saja
                 </p>
@@ -420,7 +417,7 @@ export function Sidebar({
 
       {/* ── Methodology Section ─────────────────────────────────────────────── */}
       <MethodologySection />
-    </motion.aside>
+    </aside>
   );
 }
 
@@ -438,8 +435,8 @@ function SidebarSection({
   return (
     <div>
       <div className="flex items-center gap-1.5 mb-2.5">
-        <span className="text-gray-600">{icon}</span>
-        <h2 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+        <span className="text-[#9cb3c2]">{icon}</span>
+        <h2 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6b8a9e]">
           {title}
         </h2>
       </div>
@@ -459,7 +456,7 @@ function LabeledControl({
 }) {
   return (
     <div className="space-y-1">
-      <p className="text-[10px] text-gray-600 font-medium">{label}</p>
+      <p className="text-[10px] text-[#6b8a9e] font-medium">{label}</p>
       {children}
     </div>
   );
@@ -467,20 +464,20 @@ function LabeledControl({
 
 // ── KPI Card ──────────────────────────────────────────────────────────────────
 
-type Accent = "blue" | "cyan" | "teal" | "indigo";
+type Accent = "navy" | "deep" | "medium" | "sky";
 
-const ACCENT_STYLES: Record<Accent, { border: string; icon: string; val: string }> = {
-  blue:   { border: "border-blue-500/20",   icon: "text-blue-400",   val: "text-blue-100"  },
-  cyan:   { border: "border-cyan-500/20",    icon: "text-cyan-400",   val: "text-cyan-50"   },
-  teal:   { border: "border-teal-500/20",    icon: "text-teal-400",   val: "text-teal-50"   },
-  indigo: { border: "border-indigo-500/20",  icon: "text-indigo-400", val: "text-indigo-50" },
+const ACCENT_STYLES: Record<Accent, { border: string; icon: string; val: string; bg: string }> = {
+  navy:   { border: "border-[#16425B]/15", icon: "text-[#16425B]", val: "text-[#16425B]", bg: "bg-[#16425B]/[0.03]" },
+  deep:   { border: "border-[#2F6690]/15", icon: "text-[#2F6690]", val: "text-[#2F6690]", bg: "bg-[#2F6690]/[0.03]" },
+  medium: { border: "border-[#3A7CA5]/15", icon: "text-[#3A7CA5]", val: "text-[#3A7CA5]", bg: "bg-[#3A7CA5]/[0.03]" },
+  sky:    { border: "border-[#81C3D7]/20", icon: "text-[#3A7CA5]", val: "text-[#2F6690]", bg: "bg-[#81C3D7]/[0.05]" },
 };
 
 function KPICard({
   icon,
   label,
   value,
-  accent = "blue",
+  accent = "navy",
 }: {
   icon: React.ReactNode;
   label: string;
@@ -491,17 +488,17 @@ function KPICard({
 
   return (
     <div
-      className={`rounded-xl border ${styles.border} bg-white/[0.02] px-3 py-2.5 backdrop-blur-sm`}
+      className={`rounded-xl border ${styles.border} ${styles.bg} px-3 py-2.5`}
     >
       <div className={`flex items-center gap-1 ${styles.icon} mb-1.5`}>
         {icon}
-        <span className="text-[9px] font-semibold uppercase tracking-[0.08em] text-gray-600">
+        <span className="text-[9px] font-semibold uppercase tracking-[0.08em] text-[#6b8a9e]">
           {label}
         </span>
       </div>
       <div className={`text-sm font-bold tabular-nums ${styles.val}`}>
         {value === null ? (
-          <div className="h-4 w-14 animate-pulse rounded bg-white/10" />
+          <div className="h-4 w-14 animate-pulse rounded bg-[#16425B]/10" />
         ) : (
           value
         )}
@@ -514,23 +511,23 @@ function KPICard({
 
 function MethodologySection() {
   return (
-    <div className="px-4 pt-4 pb-5 border-t border-white/[0.06] space-y-3">
+    <div className="px-4 pt-4 pb-5 border-t border-[#16425B]/8 space-y-3">
       {/* Header */}
       <div className="flex items-center gap-1.5">
-        <Info className="w-3 h-3 text-gray-600 shrink-0" />
-        <h2 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-gray-500">
+        <Info className="w-3 h-3 text-[#9cb3c2] shrink-0" />
+        <h2 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6b8a9e]">
           Metodologi
         </h2>
       </div>
 
       {/* Narrative */}
-      <p className="text-[10px] text-gray-600 leading-relaxed">
+      <p className="text-[10px] text-[#6b8a9e] leading-relaxed">
         Dashboard ini menggabungkan rekaman banjir{" "}
         <a
           href="https://groundsource.ai"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500/60 hover:text-blue-400 transition-colors"
+          className="text-[#3A7CA5] hover:text-[#2F6690] transition-colors"
         >
           Groundsource
         </a>{" "}
@@ -547,9 +544,9 @@ function MethodologySection() {
         ].map((item) => (
           <li
             key={item}
-            className="flex items-start gap-1.5 text-[10px] text-gray-600 leading-relaxed"
+            className="flex items-start gap-1.5 text-[10px] text-[#6b8a9e] leading-relaxed"
           >
-            <span className="mt-[5px] h-1 w-1 shrink-0 rounded-full bg-blue-500/40" />
+            <span className="mt-[5px] h-1 w-1 shrink-0 rounded-full bg-[#3A7CA5]/40" />
             {item}
           </li>
         ))}
@@ -561,15 +558,15 @@ function MethodologySection() {
           href="https://groundsource.ai"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-0.5 text-[9px] text-gray-700 hover:text-blue-400/70 transition-colors"
+          className="flex items-center gap-0.5 text-[9px] text-[#9cb3c2] hover:text-[#3A7CA5] transition-colors"
         >
           Groundsource Data
           <ExternalLink className="w-2.5 h-2.5" />
         </a>
-        <span className="text-gray-700 text-[9px]">·</span>
+        <span className="text-[#9cb3c2] text-[9px]">·</span>
         <a
           href="#"
-          className="flex items-center gap-0.5 text-[9px] text-gray-700 hover:text-blue-400/70 transition-colors"
+          className="flex items-center gap-0.5 text-[9px] text-[#9cb3c2] hover:text-[#3A7CA5] transition-colors"
         >
           Proyek Ini
           <ExternalLink className="w-2.5 h-2.5" />
@@ -577,7 +574,7 @@ function MethodologySection() {
       </div>
 
       {/* Copyright */}
-      <p className="text-[9px] text-gray-700 pt-1.5 border-t border-white/[0.04] leading-relaxed">
+      <p className="text-[9px] text-[#9cb3c2] pt-1.5 border-t border-[#16425B]/6 leading-relaxed">
         © 2026 Muhammad Ayyas. All rights reserved.
       </p>
     </div>

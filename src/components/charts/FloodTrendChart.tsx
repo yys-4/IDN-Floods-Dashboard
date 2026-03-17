@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   BarChart,
   Bar,
@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { Loader2, X, CalendarDays } from "lucide-react";
 import { useDuckDB } from "@/contexts/DuckDBContext";
+import { useDateRange } from "@/contexts/DateRangeContext";
 
 // ── Indonesian month names ────────────────────────────────────────────────────
 
@@ -45,24 +46,34 @@ export interface FloodTrendChartProps {
   onMonthSelect: (month: string | null) => void;
 }
 
-// ── Custom Tooltip ────────────────────────────────────────────────────────────
+// ── Custom Tooltip (fixed positioning to prevent layout shift) ────────────────
 
-function ChartTooltip({ active, payload, selectedMonth }: any) {
+interface TooltipProps {
+  active?: boolean;
+  payload?: Array<{ payload: MonthlyData }>;
+  selectedMonth: string | null;
+  coordinate?: { x: number; y: number };
+}
+
+function ChartTooltip({ active, payload, selectedMonth }: TooltipProps) {
   if (!active || !payload?.length) return null;
   const d: MonthlyData = payload[0].payload;
   const isSelected = d.month === selectedMonth;
 
   return (
-    <div className="rounded-lg border border-white/[0.1] bg-gray-900/95 px-3 py-2 text-xs shadow-2xl backdrop-blur-sm">
-      <p className="font-semibold text-white mb-1.5">{formatBulan(d.month)}</p>
+    <div
+      className="rounded-lg border border-[#16425B]/12 bg-white/98 px-3 py-2 text-xs shadow-2xl backdrop-blur-sm pointer-events-none"
+      style={{ minWidth: 120 }}
+    >
+      <p className="font-semibold text-[#16425B] mb-1.5">{formatBulan(d.month)}</p>
       <div className="space-y-0.5">
-        <p className="text-blue-400">
+        <p className="text-[#2F6690]">
           <span className="tabular-nums font-medium">
             {d.count.toLocaleString("id-ID")}
           </span>{" "}
           peristiwa
         </p>
-        <p className="text-gray-500">
+        <p className="text-[#6b8a9e]">
           <span className="tabular-nums">
             {d.area.toLocaleString("id-ID", { maximumFractionDigits: 0 })}
           </span>{" "}
@@ -70,7 +81,7 @@ function ChartTooltip({ active, payload, selectedMonth }: any) {
         </p>
       </div>
       {!isSelected && (
-        <p className="mt-1.5 text-[10px] text-gray-600 border-t border-white/[0.06] pt-1">
+        <p className="mt-1.5 text-[10px] text-[#9cb3c2] border-t border-[#16425B]/6 pt-1">
           Klik untuk memfilter peta
         </p>
       )}
@@ -80,17 +91,17 @@ function ChartTooltip({ active, payload, selectedMonth }: any) {
 
 // ── Custom X-axis tick (shows year labels only) ───────────────────────────────
 
-function YearTick({ x, y, payload }: any) {
+function YearTick({ x, y, payload }: { x?: number; y?: number; payload?: { value: string } }) {
   if (!payload?.value?.endsWith("-01")) return <g />;
   return (
-    <g transform={`translate(${x},${y})`}>
+    <g transform={`translate(${x ?? 0},${y ?? 0})`}>
       <text
         x={0}
         y={0}
         dy={11}
         textAnchor="middle"
         fontSize={9}
-        fill="#4b5563"
+        fill="#6b8a9e"
       >
         {payload.value.slice(0, 4)}
       </text>
@@ -106,8 +117,11 @@ export function FloodTrendChart({
   onMonthSelect,
 }: FloodTrendChartProps) {
   const { ready, query } = useDuckDB();
+  const { setHoverMonth } = useDateRange();
   const [data, setData] = useState<MonthlyData[]>([]);
   const [loading, setLoading] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hoverDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Fetch monthly data ────────────────────────────────────────────────────
   const fetchData = useCallback(async () => {
@@ -148,8 +162,18 @@ export function FloodTrendChart({
     fetchData();
   }, [fetchData]);
 
+  // Cleanup debounce on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverDebounceRef.current) {
+        clearTimeout(hoverDebounceRef.current);
+      }
+    };
+  }, []);
+
   // ── Handle bar click ──────────────────────────────────────────────────────
   const handleChartClick = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (chartData: any) => {
       const month: string | undefined =
         chartData?.activePayload?.[0]?.payload?.month;
@@ -159,19 +183,51 @@ export function FloodTrendChart({
     [selectedMonth, onMonthSelect]
   );
 
+  // ── Handle mouse move for hover-based map updates ─────────────────────────
+  const handleMouseMove = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (chartData: any) => {
+      // Clear any pending debounce
+      if (hoverDebounceRef.current) {
+        clearTimeout(hoverDebounceRef.current);
+      }
+
+      const month: string | undefined =
+        chartData?.activePayload?.[0]?.payload?.month;
+
+      // Debounce hover updates to prevent rapid re-queries
+      hoverDebounceRef.current = setTimeout(() => {
+        setHoverMonth(month ?? null);
+      }, 100);
+    },
+    [setHoverMonth]
+  );
+
+  // ── Handle mouse leave ────────────────────────────────────────────────────
+  const handleMouseLeave = useCallback(() => {
+    if (hoverDebounceRef.current) {
+      clearTimeout(hoverDebounceRef.current);
+    }
+    setHoverMonth(null);
+  }, [setHoverMonth]);
+
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="flex-none border-t border-white/[0.06] bg-gray-950/80 backdrop-blur-sm">
+    <div
+      ref={containerRef}
+      className="flex-none h-[185px] border-t border-[#16425B]/8 bg-white/92 backdrop-blur-sm overflow-hidden"
+      style={{ contain: "layout size" }}
+    >
       {/* ── Header ────────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between px-4 pt-3 pb-1">
         <div className="flex items-center gap-2">
-          <CalendarDays className="w-3.5 h-3.5 text-gray-600" />
-          <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-gray-500">
+          <CalendarDays className="w-3.5 h-3.5 text-[#9cb3c2]" />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#6b8a9e]">
             Tren Bulanan
           </span>
           {loading && (
-            <Loader2 className="w-3 h-3 animate-spin text-gray-600" />
+            <Loader2 className="w-3 h-3 animate-spin text-[#9cb3c2]" />
           )}
         </div>
 
@@ -179,7 +235,7 @@ export function FloodTrendChart({
         {selectedMonth && (
           <button
             onClick={() => onMonthSelect(null)}
-            className="flex items-center gap-1.5 rounded-full bg-amber-500/15 border border-amber-500/25 px-2.5 py-0.5 text-[10px] font-medium text-amber-400 hover:bg-amber-500/25 transition-colors"
+            className="flex items-center gap-1.5 rounded-full bg-[#2F6690]/10 border border-[#2F6690]/20 px-2.5 py-0.5 text-[10px] font-medium text-[#2F6690] hover:bg-[#2F6690]/20 transition-colors"
           >
             <span>{formatBulan(selectedMonth)}</span>
             <X className="w-2.5 h-2.5" />
@@ -187,11 +243,11 @@ export function FloodTrendChart({
         )}
       </div>
 
-      {/* ── Chart area ───────────────────────────────────────────────────── */}
-      <div className="h-[140px] px-2 pb-1">
+      {/* ── Chart area (fixed height to prevent layout shift) ─────────────── */}
+      <div className="h-[140px] px-2 pb-1 relative">
         {loading ? (
           <div className="h-full flex items-center justify-center">
-            <Loader2 className="w-5 h-5 animate-spin text-gray-700" />
+            <Loader2 className="w-5 h-5 animate-spin text-[#9cb3c2]" />
           </div>
         ) : data.length === 0 ? (
           <EmptyState />
@@ -201,18 +257,20 @@ export function FloodTrendChart({
               data={data}
               margin={{ top: 8, right: 8, left: 0, bottom: 16 }}
               onClick={handleChartClick}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
               style={{ cursor: "pointer" }}
             >
               <XAxis
                 dataKey="month"
                 tick={<YearTick />}
                 tickLine={false}
-                axisLine={{ stroke: "rgba(255,255,255,0.05)" }}
+                axisLine={{ stroke: "rgba(22,66,91,0.06)" }}
                 interval={0}
                 height={20}
               />
               <YAxis
-                tick={{ fontSize: 9, fill: "#4b5563" }}
+                tick={{ fontSize: 9, fill: "#6b8a9e" }}
                 axisLine={false}
                 tickLine={false}
                 width={32}
@@ -221,19 +279,24 @@ export function FloodTrendChart({
                 }
               />
               <Tooltip
-                content={
-                  <ChartTooltip selectedMonth={selectedMonth} />
-                }
-                cursor={{ fill: "rgba(255,255,255,0.04)" }}
+                content={<ChartTooltip selectedMonth={selectedMonth} />}
+                cursor={{ fill: "rgba(22,66,91,0.04)" }}
+                position={{ y: -10 }}
+                allowEscapeViewBox={{ x: false, y: true }}
+                wrapperStyle={{
+                  zIndex: 100,
+                  pointerEvents: "none",
+                  outline: "none",
+                }}
               />
               {/* Selected month reference line */}
               {selectedMonth && (
                 <ReferenceLine
                   x={selectedMonth}
-                  stroke="#f59e0b"
+                  stroke="#16425B"
                   strokeWidth={1.5}
                   strokeDasharray="3 3"
-                  strokeOpacity={0.6}
+                  strokeOpacity={0.5}
                 />
               )}
               <Bar
@@ -248,7 +311,7 @@ export function FloodTrendChart({
                   return (
                     <Cell
                       key={`cell-${entry.month}`}
-                      fill={isSelected ? "#f59e0b" : "#3b82f6"}
+                      fill={isSelected ? "#16425B" : "#3A7CA5"}
                       fillOpacity={
                         hasSelection && !isSelected ? 0.2 : 0.8
                       }
@@ -269,8 +332,8 @@ export function FloodTrendChart({
 function EmptyState() {
   return (
     <div className="h-full flex flex-col items-center justify-center gap-2">
-      <CalendarDays className="w-6 h-6 text-gray-800" />
-      <p className="text-[11px] text-gray-600">
+      <CalendarDays className="w-6 h-6 text-[#9cb3c2]" />
+      <p className="text-[11px] text-[#6b8a9e]">
         Belum ada data untuk jendela waktu ini
       </p>
     </div>

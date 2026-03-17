@@ -36,13 +36,13 @@ export function MapTooltip({ hoverInfo }: MapTooltipProps) {
   // Severity label
   let severity: { label: string; color: string };
   if (totalArea > 5000) {
-    severity = { label: "Extreme", color: "text-red-400" };
+    severity = { label: "Extreme", color: "text-red-500" };
   } else if (totalArea > 1000) {
-    severity = { label: "Severe", color: "text-orange-400" };
+    severity = { label: "Severe", color: "text-orange-500" };
   } else if (totalArea > 200) {
-    severity = { label: "Moderate", color: "text-yellow-400" };
+    severity = { label: "Moderate", color: "text-amber-500" };
   } else {
-    severity = { label: "Minor", color: "text-green-400" };
+    severity = { label: "Minor", color: "text-emerald-600" };
   }
 
   return (
@@ -50,9 +50,9 @@ export function MapTooltip({ hoverInfo }: MapTooltipProps) {
       className="pointer-events-none absolute z-50"
       style={{ left: x, top: y }}
     >
-      <div className="ml-4 -mt-2 min-w-[220px] rounded-lg border border-white/10 bg-gray-900/95 px-4 py-3 text-sm text-white shadow-xl backdrop-blur-sm">
+      <div className="ml-4 -mt-2 min-w-[220px] rounded-lg border border-[#16425B]/12 bg-white/98 px-4 py-3 text-sm text-[#16425B] shadow-xl backdrop-blur-sm">
         {/* Header */}
-        <div className="mb-2 flex items-center justify-between border-b border-white/10 pb-2">
+        <div className="mb-2 flex items-center justify-between border-b border-[#16425B]/8 pb-2">
           <span className="font-semibold">Flood Cluster</span>
           <span className={`text-xs font-medium ${severity.color}`}>
             {severity.label}
@@ -81,18 +81,18 @@ export function MapTooltip({ hoverInfo }: MapTooltipProps) {
 
         {/* Sample events */}
         {count > 0 && (
-          <div className="mt-2 border-t border-white/10 pt-2">
-            <span className="text-[11px] text-gray-400">
+          <div className="mt-2 border-t border-[#16425B]/8 pt-2">
+            <span className="text-[11px] text-[#6b8a9e]">
               Sample events:
             </span>
             <ul className="mt-1 space-y-0.5">
               {points.slice(0, 3).map((p) => (
-                <li key={p.uuid} className="text-[11px] text-gray-300">
+                <li key={p.uuid} className="text-[11px] text-[#2F6690]">
                   {p.start_date} — {p.area_km2.toFixed(1)} km²
                 </li>
               ))}
               {count > 3 && (
-                <li className="text-[11px] text-gray-500">
+                <li className="text-[11px] text-[#9cb3c2]">
                   +{count - 3} more events
                 </li>
               )}
@@ -115,7 +115,7 @@ function Row({
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
-      <span className="flex items-center gap-1.5 text-gray-400">
+      <span className="flex items-center gap-1.5 text-[#6b8a9e]">
         {icon}
         {label}
       </span>

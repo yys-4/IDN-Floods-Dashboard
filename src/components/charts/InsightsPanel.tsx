@@ -38,6 +38,10 @@ interface InsightsPanelProps {
   highlightedRegion?: string | null;
   /** Callback when a bar is clicked */
   onRegionClick?: (province: string) => void;
+  /** Currently hovered year on the trend chart */
+  hoveredYear?: number | null;
+  /** Callback when a year is hovered on the trend chart */
+  onHoverYear?: (year: number | null) => void;
 }
 
 export function InsightsPanel({
@@ -49,6 +53,8 @@ export function InsightsPanel({
   metrik = "jumlah_peristiwa",
   highlightedRegion,
   onRegionClick,
+  hoveredYear,
+  onHoverYear,
 }: InsightsPanelProps) {
   // Human-readable label for the active metric
   const metrikLabel =
@@ -91,17 +97,15 @@ export function InsightsPanel({
     : `5 Provinsi Teratas berdasarkan ${metrikLabel}`;
 
   return (
-    <motion.div
-      initial={{ x: 300, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ type: "spring", damping: 24, stiffness: 200, delay: 0.1 }}
-      className="flex-none w-[320px] border-l border-white/[0.06] bg-gray-950/90 backdrop-blur-sm overflow-y-auto z-20"
+    <div
+      className="flex-none w-[320px] min-w-[320px] max-w-[320px] h-full border-l border-[#16425B]/10 bg-white/95 backdrop-blur-sm overflow-y-auto overflow-x-hidden z-20"
+      style={{ contain: "layout size", willChange: "auto" }}
     >
       <div className="p-4 space-y-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold">Analitik</h2>
+          <h2 className="text-sm font-semibold text-[#16425B]">Analitik</h2>
           {loading && (
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-400" />
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#3A7CA5]" />
           )}
         </div>
 
@@ -128,10 +132,12 @@ export function InsightsPanel({
             data={trendData}
             loading={loading}
             currentYear={currentYear}
+            hoveredYear={hoveredYear}
+            onHoverYear={onHoverYear}
           />
         </Section>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -156,9 +162,9 @@ function KPICard({
 }) {
   if (loading) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-transparent p-4">
+      <div className="rounded-xl border border-[#16425B]/8 bg-[#16425B]/[0.02] p-4">
         <div className="h-20 flex items-center justify-center">
-          <Loader2 className="w-5 h-5 animate-spin text-gray-600" />
+          <Loader2 className="w-5 h-5 animate-spin text-[#9cb3c2]" />
         </div>
       </div>
     );
@@ -166,8 +172,8 @@ function KPICard({
 
   if (!yoyChange) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-transparent p-4">
-        <p className="text-xs text-gray-500 text-center py-4">
+      <div className="rounded-xl border border-[#16425B]/8 bg-[#16425B]/[0.02] p-4">
+        <p className="text-xs text-[#6b8a9e] text-center py-4">
           Data tidak cukup untuk perbandingan
         </p>
       </div>
@@ -184,25 +190,25 @@ function KPICard({
       animate={{ scale: 1, opacity: 1 }}
       className={`rounded-xl border p-4 ${
         isIncrease
-          ? "border-red-500/20 bg-gradient-to-br from-red-500/10 to-transparent"
+          ? "border-red-400/25 bg-gradient-to-br from-red-50/80 to-transparent"
           : isDecrease
-          ? "border-green-500/20 bg-gradient-to-br from-green-500/10 to-transparent"
-          : "border-white/[0.06] bg-gradient-to-br from-white/[0.03] to-transparent"
+          ? "border-emerald-400/25 bg-gradient-to-br from-emerald-50/80 to-transparent"
+          : "border-[#16425B]/8 bg-[#16425B]/[0.02]"
       }`}
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">
+          <p className="text-[10px] uppercase tracking-wider text-[#6b8a9e] mb-1">
             Perubahan Tahun ke Tahun
           </p>
           <div className="flex items-baseline gap-2">
             <span
               className={`text-3xl font-bold tabular-nums ${
                 isIncrease
-                  ? "text-red-400"
+                  ? "text-red-500"
                   : isDecrease
-                  ? "text-green-400"
-                  : "text-gray-400"
+                  ? "text-emerald-600"
+                  : "text-[#6b8a9e]"
               }`}
             >
               {isIncrease ? "+" : isDecrease ? "-" : ""}
@@ -213,10 +219,10 @@ function KPICard({
         <div
           className={`flex h-10 w-10 items-center justify-center rounded-full ${
             isIncrease
-              ? "bg-red-500/20 text-red-400"
+              ? "bg-red-100 text-red-500"
               : isDecrease
-              ? "bg-green-500/20 text-green-400"
-              : "bg-gray-500/20 text-gray-400"
+              ? "bg-emerald-100 text-emerald-600"
+              : "bg-[#16425B]/8 text-[#6b8a9e]"
           }`}
         >
           {isIncrease ? (
@@ -228,7 +234,7 @@ function KPICard({
           )}
         </div>
       </div>
-      <div className="mt-3 flex items-center gap-3 text-[11px] text-gray-500">
+      <div className="mt-3 flex items-center gap-3 text-[11px] text-[#6b8a9e]">
         <span>
           {yoyChange.latestYear}: {yoyChange.latestCount.toLocaleString("id-ID")} {metrikLabel}
         </span>
@@ -259,14 +265,14 @@ function ProvinceBarChart({
   if (loading) {
     return (
       <div className="h-[180px] flex items-center justify-center">
-        <Loader2 className="w-5 h-5 animate-spin text-gray-600" />
+        <Loader2 className="w-5 h-5 animate-spin text-[#9cb3c2]" />
       </div>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className="h-[180px] flex items-center justify-center text-xs text-gray-500">
+      <div className="h-[180px] flex items-center justify-center text-xs text-[#6b8a9e]">
         Tidak ada data di tampilan ini
       </div>
     );
@@ -288,7 +294,7 @@ function ProvinceBarChart({
         >
           <XAxis
             type="number"
-            tick={{ fontSize: 10, fill: "#6b7280" }}
+            tick={{ fontSize: 10, fill: "#6b8a9e" }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) =>
@@ -298,20 +304,21 @@ function ProvinceBarChart({
           <YAxis
             type="category"
             dataKey="province"
-            tick={{ fontSize: 10, fill: "#9ca3af" }}
+            tick={{ fontSize: 10, fill: "#2F6690" }}
             axisLine={false}
             tickLine={false}
             width={90}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#111827",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor: "#ffffff",
+              border: "1px solid rgba(22,66,91,0.12)",
               borderRadius: "8px",
               fontSize: "12px",
+              color: "#16425B",
             }}
-            labelStyle={{ color: "#fff", fontWeight: 600 }}
-            itemStyle={{ color: "#60a5fa" }}
+            labelStyle={{ color: "#16425B", fontWeight: 600 }}
+            itemStyle={{ color: "#2F6690" }}
             formatter={(value) => [
               `${Number(value).toLocaleString("id-ID")} ${metrikLabel}`,
               "Nilai",
@@ -328,7 +335,7 @@ function ProvinceBarChart({
               return (
                 <Cell
                   key={`bar-${entry.province}`}
-                  fill={isHighlighted ? "#f59e0b" : "#3b82f6"}
+                  fill={isHighlighted ? "#16425B" : "#3A7CA5"}
                   fillOpacity={hasHighlight && !isHighlighted ? 0.3 : 1}
                 />
               );
@@ -346,22 +353,26 @@ function TrendLineChart({
   data,
   loading,
   currentYear,
+  hoveredYear,
+  onHoverYear,
 }: {
   data: YearlyTrend[];
   loading: boolean;
   currentYear?: number;
+  hoveredYear?: number | null;
+  onHoverYear?: (year: number | null) => void;
 }) {
   if (loading) {
     return (
       <div className="h-[160px] flex items-center justify-center">
-        <Loader2 className="w-5 h-5 animate-spin text-gray-600" />
+        <Loader2 className="w-5 h-5 animate-spin text-[#9cb3c2]" />
       </div>
     );
   }
 
   if (data.length === 0) {
     return (
-      <div className="h-[160px] flex items-center justify-center text-xs text-gray-500">
+      <div className="h-[160px] flex items-center justify-center text-xs text-[#6b8a9e]">
         Tidak ada data di tampilan ini
       </div>
     );
@@ -375,27 +386,36 @@ function TrendLineChart({
         <AreaChart
           data={sortedData}
           margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
+          onMouseMove={(e: any) => {
+            if (e && e.activePayload && e.activePayload.length > 0) {
+              const year = e.activePayload[0].payload.year;
+              if (onHoverYear && year !== hoveredYear) onHoverYear(year);
+            }
+          }}
+          onMouseLeave={() => {
+            if (onHoverYear) onHoverYear(null);
+          }}
         >
           <defs>
             <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+              <stop offset="5%" stopColor="#3A7CA5" stopOpacity={0.25} />
+              <stop offset="95%" stopColor="#81C3D7" stopOpacity={0.03} />
             </linearGradient>
           </defs>
           <CartesianGrid
             strokeDasharray="3 3"
-            stroke="rgba(255,255,255,0.05)"
+            stroke="rgba(22,66,91,0.06)"
             vertical={false}
           />
           <XAxis
             dataKey="year"
-            tick={{ fontSize: 10, fill: "#6b7280" }}
+            tick={{ fontSize: 10, fill: "#6b8a9e" }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v) => `'${String(v).slice(-2)}`}
           />
           <YAxis
-            tick={{ fontSize: 10, fill: "#6b7280" }}
+            tick={{ fontSize: 10, fill: "#6b8a9e" }}
             axisLine={false}
             tickLine={false}
             width={40}
@@ -405,12 +425,13 @@ function TrendLineChart({
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#111827",
-              border: "1px solid rgba(255,255,255,0.1)",
+              backgroundColor: "#ffffff",
+              border: "1px solid rgba(22,66,91,0.12)",
               borderRadius: "8px",
               fontSize: "12px",
+              color: "#16425B",
             }}
-            labelStyle={{ color: "#fff", fontWeight: 600 }}
+            labelStyle={{ color: "#16425B", fontWeight: 600 }}
             formatter={(value, name) => [
               `${Number(value).toLocaleString("id-ID")}`,
               name === "count" ? "Peristiwa" : "Luas (km²)",
@@ -420,7 +441,7 @@ function TrendLineChart({
           <Area
             type="monotone"
             dataKey="count"
-            stroke="#3b82f6"
+            stroke="#2F6690"
             strokeWidth={2}
             fill="url(#colorCount)"
             animationDuration={800}
@@ -433,7 +454,7 @@ function TrendLineChart({
                     cx={cx}
                     cy={cy}
                     r={5}
-                    fill="#3b82f6"
+                    fill="#2F6690"
                     stroke="#fff"
                     strokeWidth={2}
                   />
@@ -445,7 +466,7 @@ function TrendLineChart({
                   cx={cx}
                   cy={cy}
                   r={3}
-                  fill="#3b82f6"
+                  fill="#3A7CA5"
                 />
               );
             }}
@@ -468,8 +489,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
-      <div className="flex items-center gap-1.5 mb-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-gray-500">
+    <div className="rounded-lg border border-[#16425B]/8 bg-[#16425B]/[0.02] p-3">
+      <div className="flex items-center gap-1.5 mb-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#6b8a9e]">
         {icon}
         <span className="truncate">{title}</span>
       </div>
